@@ -1,0 +1,14 @@
+.host {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main {
+  background: #3e3e3e;
+  padding: 1rem;
+  justify-content: center;
+  overflow: auto;
+  flex: 1;
+}
