@@ -2,8 +2,8 @@
 
 import { useIsLoading } from "./LoadersProvider";
 
-export default function IsLoading({loaderId, children}: {loaderId: string, children: React.ReactNode}) {
+export default function IsLoading({loaderId, children}: {loaderId: string, children: any}) {
     const isLoading = useIsLoading(loaderId);
 
-    return isLoading && children;
+    return (isLoading || null) && children;
 }

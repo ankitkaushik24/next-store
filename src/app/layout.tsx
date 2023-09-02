@@ -1,11 +1,10 @@
-'use client';
-
 import { LoadersProvider } from "@/utils/LoadersProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import IsLoading from "@/utils/IsLoading";
 import Loader from "@/components/Loader";
+import { UserServiceProvider } from "@/services/UserServiceProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <LoadersProvider>
+          <UserServiceProvider>
           <IsLoading loaderId="main">
             <Loader />
           </IsLoading>
           {children}
+          </UserServiceProvider>
         </LoadersProvider>
       </body>
     </html>

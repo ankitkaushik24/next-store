@@ -5,8 +5,8 @@ import TextField from "@mui/material/TextField";
 import Image from "next/image";
 import { FormEvent, useContext, useMemo, useReducer } from "react";
 
-import styles from "./login.module.scss";
-import { useUserService } from "@/services/UserService";
+import styles from "./Login.module.scss";
+import { useUserService } from "@/services/UserServiceProvider";
 
 const initialFormValue = {
   username: "",

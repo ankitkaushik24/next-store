@@ -1,4 +1,4 @@
-import { useUserService } from "@/services/UserService";
+import { useUserService } from "@/services/UserServiceProvider";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";

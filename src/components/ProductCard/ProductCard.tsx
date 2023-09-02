@@ -31,7 +31,7 @@ export default function ProductCard({product}: IProps) {
             subheader={'$' + product.price}
           />
           <CardContent>
-            <Typography className={styles.description} variant="body2" color="text.secondary">
+            <Typography className={styles.description} variant="body2">
               {product.description}
             </Typography>
           </CardContent>

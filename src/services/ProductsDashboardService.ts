@@ -1,9 +1,11 @@
 import { IProduct } from "@/models/product.model";
+import { useLoading } from "@/utils/LoadersProvider";
 import { useEffect, useMemo, useReducer, useState } from "react";
 
 export const PAGE_SIZE = 10;
 
 export function useProductsDashboardService() {
+  const loading = useLoading();
   const [products, dispatch] = useReducer(
     (state: IProduct[], { type, payload }: { type: string; payload: any }) => {
       switch (type) {
@@ -58,7 +60,7 @@ export function useProductsDashboardService() {
   }
 
   function deleteProduct(productId: number) {
-    deleteProductReq(productId);
+    deleteProductReq(productId).then((payload) => dispatch({type: 'deleted', payload}));
   }
 
   // API calls
@@ -81,12 +83,13 @@ export function useProductsDashboardService() {
   }
 
   function deleteProductReq(_id: number) {
-    return fetch(`https://fakestoreapi.com/products/${_id}`, {
+    return loading(() => fetch(`https://fakestoreapi.com/products/${_id}`, {
       method: "DELETE",
-    });
+    }).then(res => res.json()), 'main');
   }
 
   return {
+    pageIndex,
     setPageIndex,
     visibleProducts,
     totalCount,

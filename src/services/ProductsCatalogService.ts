@@ -27,11 +27,11 @@ export function useProductsCatalogState() {
 
     useEffect(() => {
         if (categories && selectedCategory) {
-            fetch(`https://fakestoreapi.com/products/category/${selectedCategory}`)
+            loading(() => fetch(`https://fakestoreapi.com/products/category/${selectedCategory}`), 'main')
             .then(res => res.json())
             .then(products => setProductsInCategory(products));
         }
-    }, [categories, selectedCategory]);
+    }, [categories, selectedCategory, loading]);
 
     return {categories, selectedCategory, productsInCategory, setSelectedCategory};
 }
