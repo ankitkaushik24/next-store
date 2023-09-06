@@ -25,7 +25,7 @@ export function useProductsDashboardService() {
       }
       return state;
     },
-    []
+    [],
   );
   const [pageIndex, setPageIndex] = useState(0);
   const visibleProducts = useMemo(() => {
@@ -35,7 +35,7 @@ export function useProductsDashboardService() {
 
   useEffect(() => {
     fetchProducts().then((fetchedProducts) =>
-      dispatch({ type: "fetched", payload: fetchedProducts })
+      dispatch({ type: "fetched", payload: fetchedProducts }),
     );
   }, []);
 
@@ -56,36 +56,51 @@ export function useProductsDashboardService() {
     payload: IProduct;
     postRequest: () => void;
   }) {
-    updateProductReq(payload.id, payload);
+    updateProductReq(payload.id, payload)
+      .then((value) => dispatch({ type: "updated", payload }))
+      .finally(() => postRequest());
   }
 
   function deleteProduct(productId: number) {
-    deleteProductReq(productId).then((payload) => dispatch({type: 'deleted', payload}));
+    deleteProductReq(productId).then((payload) =>
+      dispatch({ type: "deleted", payload }),
+    );
   }
 
   // API calls
   function fetchProducts(): Promise<IProduct[]> {
-    return fetch("https://fakestoreapi.com/products").then((res) => res.json());
+    return loading(
+      () => fetch("https://fakestoreapi.com/products"),
+      "main",
+    ).then((res) => res.json());
   }
 
   function createProductReq(payload: IProduct) {
     return fetch("https://fakestoreapi.com/products", {
       body: JSON.stringify(payload),
       method: "POST",
-    });
+    }).then((res) => res.json());
   }
 
   function updateProductReq(productId: number, updatedProduct: IProduct) {
-    return fetch(`https://fakestoreapi.com/products/${productId}`, {
-      body: JSON.stringify(updatedProduct),
-      method: "PUT",
-    });
+    return loading(
+      () =>
+        fetch(`https://fakestoreapi.com/products/${productId}`, {
+          body: JSON.stringify(updatedProduct),
+          method: "PUT",
+        }),
+      "main",
+    ).then((res) => res.json());
   }
 
   function deleteProductReq(_id: number) {
-    return loading(() => fetch(`https://fakestoreapi.com/products/${_id}`, {
-      method: "DELETE",
-    }).then(res => res.json()), 'main');
+    return loading(
+      () =>
+        fetch(`https://fakestoreapi.com/products/${_id}`, {
+          method: "DELETE",
+        }).then((res) => res.json()),
+      "main",
+    );
   }
 
   return {
